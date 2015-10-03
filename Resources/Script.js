@@ -166,7 +166,7 @@
         var notes = document.getElementById("notes-content");
         var title = "[" + (page.index + 1) + "/" + data.pages.length + "] " + page.title;
         updateTitle();
-        notes.innerHTML = "<span class=\"header font-headline\">Notes</span><span class=\"title font-headline\">" + title + "</span><div id=\"prev-icon-black\" class=\"material-icon-button on\"></div><div id=\"next-icon-black\" class=\"material-icon-button on\"></div><br>" + (page.note || "<span style=\"color: #9E9E9E;\">Nothing here :)</span>");
+        notes.innerHTML = "<span class=\"header font-headline\">Notes</span><span class=\"title font-headline\">" + title + "</span><div id=\"prev-icon-black\" class=\"material-icon-button on\"></div><div id=\"next-icon-black\" class=\"material-icon-button on\"></div><br>" + (page.note || "<span style=\"color: #9E9E9E;\">There are no notes :)</span>");
 
         document.getElementById("prev-icon-black").addEventListener("click", prevClick);
         document.getElementById("next-icon-black").addEventListener("click", nextClick);
@@ -250,6 +250,16 @@
         } else if (image.webkitRequestFullscreen) {
             image.webkitRequestFullscreen();
         }
+        setTimeout(function() {
+            try {
+                //window.imageMapResize(currentPage.map);
+                var evt = document.createEvent("UIEvents");
+                evt.initUIEvent("resize", true, false, window, 0);
+                window.dispatchEvent(evt);
+            } catch (e) {
+                console.log(e);
+            }
+        }, 200);
     }
 
     function addFullscreenExitListeners() {
@@ -262,6 +272,17 @@
     function fullscreenExitHandler() {
         if ((document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement) !== true) {
             document.getElementById("image-container").classList.remove("fullscreen");
+            try {
+                var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+                if (w < 768) {
+                    window.imageMapResize(currentPage.map);
+                };
+                var evt = document.createEvent("UIEvents");
+                evt.initUIEvent("resize", true, false, window, 0);
+                window.dispatchEvent(evt);
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 
@@ -503,6 +524,7 @@
         }
 
         return function imageMapResizeF(target) {
+            console.log("RESIZING " + target.getAttribute("name"));
             switch (typeof(target)) {
                 case 'undefined':
                 case 'string':

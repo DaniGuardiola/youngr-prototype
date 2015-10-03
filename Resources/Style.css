@@ -45,7 +45,7 @@ body:not(.ready) {
     margin-top: -1px;
     width: 100%;
     height: 168px;
-    background-color: #3F51B5;
+    background-color: #795548;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
@@ -111,7 +111,7 @@ body:not(.ready) {
 }
 
 #mobile-page-title {
-    color: #C5CAE9;
+    color: #BCAAA4;
     margin-top: 14px;
     margin-left: 16px;
     flex-shrink: 1;
